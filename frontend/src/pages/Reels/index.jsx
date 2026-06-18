@@ -1,35 +1,99 @@
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  getReels,
+} from "../../services/reels.service";
+
 function ReelsPage() {
+  const [reels,
+    setReels] =
+    useState([]);
+
+  const loadReels =
+    async () => {
+      try {
+        const response =
+          await getReels();
+
+        setReels(
+          response.data || []
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  useEffect(() => {
+    loadReels();
+  }, []);
+
   return (
     <div
       style={{
         padding: "30px",
       }}
     >
-      <h1>Fashion Reels</h1>
+      <h1>
+        Fashion Reels
+      </h1>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(3,1fr)",
-          gap: "20px",
-        }}
-      >
-        {[1, 2, 3, 4, 5, 6].map(
-          (item) => (
-            <div
-              key={item}
-              style={{
-                height: "300px",
-                border:
-                  "1px solid #ddd",
-              }}
+      {reels.map(
+        (reel) => (
+          <div
+            key={reel.id}
+            style={{
+              border:
+                "1px solid #ddd",
+              padding:
+                "20px",
+              marginBottom:
+                "20px",
+            }}
+          >
+            <h3>
+              {reel.title}
+            </h3>
+
+            <p>
+              {
+                reel.caption
+              }
+            </p>
+
+            <video
+              width="400"
+              controls
             >
-              Reel {item}
-            </div>
-          )
-        )}
-      </div>
+              <source
+                src={
+                  reel.videoUrl
+                }
+              />
+            </video>
+
+            <p>
+              Likes:
+              {" "}
+              {
+                reel.likes
+                  ?.length
+              }
+            </p>
+
+            <p>
+              Comments:
+              {" "}
+              {
+                reel.comments
+                  ?.length
+              }
+            </p>
+          </div>
+        )
+      )}
     </div>
   );
 }

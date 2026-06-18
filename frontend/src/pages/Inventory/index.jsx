@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  getInventories,
+} from "../../services/inventory.service";
 
 function InventoryPage() {
-  const [products] = useState([
-    {
-      id: 1,
-      name: "Oversized Hoodie",
-      stock: 25,
-    },
-    {
-      id: 2,
-      name: "Cargo Pants",
-      stock: 14,
-    },
-  ]);
+  const [inventories,
+    setInventories] =
+    useState([]);
+
+  const loadInventory =
+    async () => {
+      try {
+        const response =
+          await getInventories();
+
+        setInventories(
+          response.data || []
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  useEffect(() => {
+    loadInventory();
+  }, []);
 
   return (
     <div
@@ -22,40 +34,43 @@ function InventoryPage() {
     >
       <h1>Inventory</h1>
 
-      <table
-        style={{
-          width: "100%",
-          marginTop: "20px",
-        }}
-      >
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Product</th>
-            <th>Stock</th>
-          </tr>
-        </thead>
+      {inventories.map(
+        (item) => (
+          <div
+            key={item.id}
+            style={{
+              border:
+                "1px solid #ddd",
+              padding: "20px",
+              marginBottom:
+                "10px",
+            }}
+          >
+            <h3>
+              {
+                item.product
+                  ?.name
+              }
+            </h3>
 
-        <tbody>
-          {products.map(
-            (product) => (
-              <tr key={product.id}>
-                <td>
-                  {product.id}
-                </td>
+            <p>
+              Quantity:
+              {" "}
+              {
+                item.quantity
+              }
+            </p>
 
-                <td>
-                  {product.name}
-                </td>
-
-                <td>
-                  {product.stock}
-                </td>
-              </tr>
-            )
-          )}
-        </tbody>
-      </table>
+            <p>
+              Location:
+              {" "}
+              {
+                item.location
+              }
+            </p>
+          </div>
+        )
+      )}
     </div>
   );
 }

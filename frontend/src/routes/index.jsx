@@ -1,67 +1,69 @@
 import {
+  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
 
-import HomePage from "../pages/Home";
-import LoginPage from "../pages/Login";
-import RegisterPage from "../pages/Register";
-import DashboardPage from "../pages/Dashboard";
-
-import BrandsPage from "../pages/Brands";
-import ProductsPage from "../pages/Products";
-import InventoryPage from "../pages/Inventory";
-import OrdersPage from "../pages/Orders";
-import ReelsPage from "../pages/Reels";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import Dashboard from "../pages/Dashboard";
+import Products from "../pages/Products";
+import Inventory from "../pages/Inventory";
+import Orders from "../pages/Orders";
+import Reels from "../pages/Reels";
 
 function AppRoutes() {
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<HomePage />}
-      />
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<Login />}
+        />
 
-      <Route
-        path="/login"
-        element={<LoginPage />}
-      />
+        <Route
+          path="/register"
+          element={
+            <Register />
+          }
+        />
 
-      <Route
-        path="/register"
-        element={<RegisterPage />}
-      />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard />
+          }
+        />
 
-      <Route
-        path="/dashboard"
-        element={<DashboardPage />}
-      />
+        <Route
+          path="/products"
+          element={
+            <Products />
+          }
+        />
 
-      <Route
-        path="/brands"
-        element={<BrandsPage />}
-      />
+        <Route
+          path="/inventory"
+          element={
+            <Inventory />
+          }
+        />
 
-      <Route
-        path="/products"
-        element={<ProductsPage />}
-      />
+        <Route
+          path="/orders"
+          element={
+            <Orders />
+          }
+        />
 
-      <Route
-        path="/inventory"
-        element={<InventoryPage />}
-      />
-
-      <Route
-        path="/orders"
-        element={<OrdersPage />}
-      />
-
-      <Route
-        path="/reels"
-        element={<ReelsPage />}
-      />
-    </Routes>
+        <Route
+          path="/reels"
+          element={
+            <Reels />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
