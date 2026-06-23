@@ -1,30 +1,39 @@
-import { useEffect, useState } from "react";
-import ProductForm from "../../components/ProductForm/ProductForm";
 import {
-  getProducts,
-} from "../../services/product.service";
+  useEffect,
+  useState,
+} from "react";
 
-function ProductsPage() {
-  const [products, setProducts] =
+import ProductCard
+  from "../../components/ProductCard/ProductCard";
+
+import api
+  from "../../services/api";
+
+function Products() {
+  const [products,
+    setProducts] =
     useState([]);
 
-  const loadProducts =
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts =
     async () => {
       try {
         const response =
-          await getProducts();
+          await api.get(
+            "/products"
+          );
 
         setProducts(
-          response.data || []
+          response.data.data ||
+          []
         );
       } catch (error) {
         console.error(error);
       }
     };
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   return (
     <div
@@ -32,56 +41,28 @@ function ProductsPage() {
         padding: "30px",
       }}
     >
-      <h1>Products</h1>
-
-      <ProductForm
-        onCreated={
-          loadProducts
-        }
-      />
+      <h1>
+        Products
+      </h1>
 
       <div
         style={{
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fill,minmax(300px,1fr))",
+            "repeat(auto-fill,minmax(250px,1fr))",
           gap: "20px",
-          marginTop: "20px",
         }}
       >
         {products.map(
           (product) => (
-            <div
-              key={product.id}
-              style={{
-                border:
-                  "1px solid #ddd",
-                borderRadius:
-                  "10px",
-                padding: "20px",
-              }}
-            >
-              <h3>
-                {product.name}
-              </h3>
-
-              <p>
-                {
-                  product.description
-                }
-              </p>
-
-              <p>
-                ₹
-                {product.price}
-              </p>
-
-              <p>
-                Stock:
-                {" "}
-                {product.stock}
-              </p>
-            </div>
+            <ProductCard
+              key={
+                product.id
+              }
+              product={
+                product
+              }
+            />
           )
         )}
       </div>
@@ -89,4 +70,4 @@ function ProductsPage() {
   );
 }
 
-export default ProductsPage;
+export default Products;

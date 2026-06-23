@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
@@ -11,59 +10,51 @@ import Products from "../pages/Products";
 import Inventory from "../pages/Inventory";
 import Orders from "../pages/Orders";
 import Reels from "../pages/Reels";
+import AIStylist from "../pages/AIStylist";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={<Login />}
-        />
+    <Routes>
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
-        <Route
-          path="/register"
-          element={
-            <Register />
-          }
-        />
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
-        <Route
-          path="/dashboard"
-          element={
-            <Dashboard />
-          }
-        />
+      <Route
+        path="/dashboard"
+        element={<Dashboard />}
+      />
 
-        <Route
-          path="/products"
-          element={
-            <Products />
-          }
-        />
+      <Route
+        path="/products"
+        element={<Products />}
+      />
 
-        <Route
-          path="/inventory"
-          element={
-            <Inventory />
-          }
-        />
+      <Route
+        path="/inventory"
+        element={<Inventory />}
+      />
 
-        <Route
-          path="/orders"
-          element={
-            <Orders />
-          }
-        />
+      <Route
+        path="/orders"
+        element={<Orders />}
+      />
 
-        <Route
-          path="/reels"
-          element={
-            <Reels />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      <Route
+        path="/reels"
+        element={<Reels />}
+      />
+
+      <Route
+        path="/ai-stylist"
+        element={<AIStylist />}
+      />
+    </Routes>
   );
 }
 

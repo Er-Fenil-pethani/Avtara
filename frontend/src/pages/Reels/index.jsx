@@ -7,10 +7,17 @@ import {
   getReels,
 } from "../../services/reels.service";
 
+import ReelCard
+  from "./ReelCard";
+
 function ReelsPage() {
   const [reels,
     setReels] =
     useState([]);
+
+  useEffect(() => {
+    loadReels();
+  }, []);
 
   const loadReels =
     async () => {
@@ -26,14 +33,15 @@ function ReelsPage() {
       }
     };
 
-  useEffect(() => {
-    loadReels();
-  }, []);
-
   return (
     <div
       style={{
-        padding: "30px",
+        maxWidth:
+          "800px",
+        margin:
+          "0 auto",
+        padding:
+          "30px",
       }}
     >
       <h1>
@@ -42,56 +50,12 @@ function ReelsPage() {
 
       {reels.map(
         (reel) => (
-          <div
-            key={reel.id}
-            style={{
-              border:
-                "1px solid #ddd",
-              padding:
-                "20px",
-              marginBottom:
-                "20px",
-            }}
-          >
-            <h3>
-              {reel.title}
-            </h3>
-
-            <p>
-              {
-                reel.caption
-              }
-            </p>
-
-            <video
-              width="400"
-              controls
-            >
-              <source
-                src={
-                  reel.videoUrl
-                }
-              />
-            </video>
-
-            <p>
-              Likes:
-              {" "}
-              {
-                reel.likes
-                  ?.length
-              }
-            </p>
-
-            <p>
-              Comments:
-              {" "}
-              {
-                reel.comments
-                  ?.length
-              }
-            </p>
-          </div>
+          <ReelCard
+            key={
+              reel.id
+            }
+            reel={reel}
+          />
         )
       )}
     </div>

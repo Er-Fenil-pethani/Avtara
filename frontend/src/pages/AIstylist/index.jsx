@@ -1,54 +1,108 @@
-import { useState } from "react";
+import {
+  useState,
+} from "react";
 
-function AIStylistPage() {
-  const [prompt, setPrompt] =
+import {
+  generateOutfit,
+} from "../../services/ai.service";
+
+import OutfitCard
+  from "../../components/OutfitCard/OutfitCard";
+
+function AIStylist() {
+  const [occasion,
+    setOccasion] =
     useState("");
 
-  const [result, setResult] =
+  const [budget,
+    setBudget] =
     useState("");
 
-  const generateSuggestion =
-    () => {
-      setResult(
-        `Recommended outfit for "${prompt}":
-         
-Oversized black tee
-Cargo pants
-White sneakers`
-      );
+  const [outfit,
+    setOutfit] =
+    useState([]);
+
+  const [loading,
+    setLoading] =
+    useState(false);
+
+  const handleGenerate =
+    async () => {
+      try {
+        setLoading(true);
+
+        const response =
+          await generateOutfit({
+            occasion,
+            budget,
+          });
+
+        setOutfit(
+          response.data
+            .outfit || []
+        );
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
   return (
-    <div
-      style={{
-        padding: "30px",
-      }}
-    >
-      <h1>AI Stylist</h1>
+    <div>
+      <h1>
+        AI Stylist
+      </h1>
 
       <input
-        value={prompt}
+        placeholder="Occasion"
+        value={occasion}
         onChange={(e) =>
-          setPrompt(
+          setOccasion(
             e.target.value
           )
         }
-        placeholder="College outfit"
       />
+
+      <br />
+      <br />
+
+      <input
+        placeholder="Budget"
+        value={budget}
+        onChange={(e) =>
+          setBudget(
+            e.target.value
+          )
+        }
+      />
+
+      <br />
+      <br />
 
       <button
         onClick={
-          generateSuggestion
+          handleGenerate
         }
       >
-        Generate
+        Generate Outfit
       </button>
 
-      <pre>
-        {result}
-      </pre>
+      {loading && (
+        <h3>
+          Generating...
+        </h3>
+      )}
+
+      {!!outfit.length && (
+        <OutfitCard
+          products={
+            outfit
+          }
+        />
+      )}
     </div>
   );
 }
 
-export default AIStylistPage;
+export default AIStylist;

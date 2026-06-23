@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import {
+  Link,
+} from "react-router-dom";
 
 function Sidebar() {
   return (
@@ -11,38 +13,72 @@ function Sidebar() {
         padding: "20px",
       }}
     >
-      <h2>Avtara</h2>
+      <h2>
+        Avtara
+      </h2>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection:
+            "column",
           gap: "15px",
-          marginTop: "30px",
+          marginTop:
+            "30px",
         }}
       >
-        <Link to="/dashboard">
+        <Link
+          to="/dashboard"
+        >
           Dashboard
         </Link>
 
-        <Link to="/brands">
-          Brands
-        </Link>
-
-        <Link to="/products">
+        <Link
+          to="/products"
+        >
           Products
         </Link>
 
-        <Link to="/inventory">
+        <Link
+          to="/shops"
+        >
+          Shops
+        </Link>
+
+        <Link
+          to="/inventory"
+        >
           Inventory
         </Link>
 
-        <Link to="/orders">
+        <Link
+          to="/orders"
+        >
           Orders
         </Link>
 
-        <Link to="/reels">
+        <Link
+          to="/reels"
+        >
           Reels
+        </Link>
+
+        <Link
+          to="/wishlist"
+        >
+          Wishlist
+        </Link>
+
+        <Link
+          to="/cart"
+        >
+          Cart
+        </Link>
+
+        <Link
+          to="/ai-stylist"
+        >
+          AI Stylist
         </Link>
       </div>
     </div>

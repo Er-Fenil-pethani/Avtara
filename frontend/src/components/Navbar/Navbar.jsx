@@ -1,33 +1,55 @@
-import { Link } from "react-router-dom";
+import {
+  Link,
+} from "react-router-dom";
 
 function Navbar() {
   return (
     <nav
       style={{
-        display: "flex",
-        justifyContent: "space-between",
-        padding: "20px 40px",
-        borderBottom: "1px solid #ddd",
+        padding:
+          "15px",
+        borderBottom:
+          "1px solid #ddd",
+        display:
+          "flex",
+        gap: "20px",
       }}
     >
-      <h2>Avtara</h2>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-        }}
+      <Link
+        to="/dashboard"
       >
-        <Link to="/">Home</Link>
+        Dashboard
+      </Link>
 
-        <Link to="/login">
-          Login
-        </Link>
+      <Link
+        to="/products"
+      >
+        Products
+      </Link>
 
-        <Link to="/register">
-          Register
-        </Link>
-      </div>
+      <Link
+        to="/orders"
+      >
+        Orders
+      </Link>
+
+      <Link
+        to="/inventory"
+      >
+        Inventory
+      </Link>
+
+      <Link
+        to="/reels"
+      >
+        Reels
+      </Link>
+
+      <Link
+        to="/ai-stylist"
+      >
+        AI Stylist
+      </Link>
     </nav>
   );
 }

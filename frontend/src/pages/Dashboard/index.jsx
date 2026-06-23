@@ -1,88 +1,92 @@
-import Sidebar from "../../components/Sidebar/Sidebar";
-import Topbar from "../../components/Topbar/Topbar";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-function DashboardPage() {
+import {
+  getAnalytics,
+} from "../../services/analytics.service";
+
+import StatCard
+  from "../../components/StatCard/StatCard";
+
+function Dashboard() {
+  const [stats,
+    setStats] =
+    useState(null);
+
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  const loadStats =
+    async () => {
+      try {
+        const response =
+          await getAnalytics();
+
+        setStats(
+          response.data
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+  if (!stats)
+    return <h2>Loading...</h2>;
+
   return (
     <div
       style={{
-        display: "flex",
+        padding:
+          "30px",
       }}
     >
-      <Sidebar />
+      <h1>
+        Dashboard
+      </h1>
 
       <div
         style={{
-          flex: 1,
+          display:
+            "grid",
+          gridTemplateColumns:
+            "repeat(4,1fr)",
+          gap:
+            "20px",
         }}
       >
-        <Topbar />
+        <StatCard
+          title="Products"
+          value={
+            stats.products
+          }
+        />
 
-        <div
-          style={{
-            padding: "30px",
-          }}
-        >
-          <h1>
-            Welcome to Avtara
-          </h1>
+        <StatCard
+          title="Orders"
+          value={
+            stats.orders
+          }
+        />
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(4,1fr)",
-              gap: "20px",
-              marginTop: "30px",
-            }}
-          >
-            <div
-              style={{
-                border:
-                  "1px solid #ddd",
-                padding: "20px",
-              }}
-            >
-              <h3>Brands</h3>
-              <h1>0</h1>
-            </div>
+        <StatCard
+          title="Inventory"
+          value={
+            stats.inventory
+          }
+        />
 
-            <div
-              style={{
-                border:
-                  "1px solid #ddd",
-                padding: "20px",
-              }}
-            >
-              <h3>Products</h3>
-              <h1>0</h1>
-            </div>
-
-            <div
-              style={{
-                border:
-                  "1px solid #ddd",
-                padding: "20px",
-              }}
-            >
-              <h3>Orders</h3>
-              <h1>0</h1>
-            </div>
-
-            <div
-              style={{
-                border:
-                  "1px solid #ddd",
-                padding: "20px",
-              }}
-            >
-              <h3>Revenue</h3>
-              <h1>₹0</h1>
-            </div>
-          </div>
-        </div>
+        <StatCard
+          title="Reels"
+          value={
+            stats.reels
+          }
+        />
       </div>
     </div>
   );
 }
 
-export default DashboardPage;
+export default Dashboard;
