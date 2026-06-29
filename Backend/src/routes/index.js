@@ -12,6 +12,7 @@ const analyticsRoutes = require("../modules/analytics/analytics.routes");
 const cartRoutes = require("../modules/cart/cart.routes");
 const wishlistRoutes = require("../modules/wishlist/wishlist.routes");
 const aiRoutes = require("../modules/ai/ai.routes");
+const productUploadRoutes = require("../modules/products/product-upload.routes");
 
 const router =
   express.Router();
@@ -38,5 +39,6 @@ router.use("/analytics", analyticsRoutes);
 router.use("/cart", cartRoutes);
 router.use("/wishlist", wishlistRoutes);
 router.use("/ai", aiRoutes);
+router.use("/product-upload",productUploadRoutes);
 
 module.exports = router;

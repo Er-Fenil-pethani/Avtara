@@ -1,4 +1,7 @@
-function ReelCard({
+import TaggedProduct
+  from "../../components/TaggedProduct/TaggedProduct";
+  
+  function ReelCard({
   reel,
 }) {
   return (
@@ -13,6 +16,7 @@ function ReelCard({
         marginBottom:
           "20px",
       }}
+      
     >
       <video
         width="100%"

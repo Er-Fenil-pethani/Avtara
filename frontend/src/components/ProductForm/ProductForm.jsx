@@ -1,60 +1,47 @@
 import { useState } from "react";
-import {
-  createProduct,
-} from "../../services/product.service";
 
-function ProductForm({
-  onCreated,
-}) {
-  const [form, setForm] =
+import ImageUploader from
+  "../ImageUploader/ImageUploader";
+
+import api from
+  "../../services/api";
+
+function ProductForm() {
+  const [form,
+    setForm] =
     useState({
       name: "",
       description: "",
       price: "",
       stock: "",
-      brandId: "",
+      imageUrl: "",
     });
 
-  const handleChange = (
-    e
-  ) => {
-    setForm({
-      ...form,
-      [e.target.name]:
-        e.target.value,
-    });
-  };
+  const handleChange =
+    (e) => {
+      setForm({
+        ...form,
+        [e.target.name]:
+          e.target.value,
+      });
+    };
 
   const handleSubmit =
     async (e) => {
       e.preventDefault();
 
       try {
-        await createProduct({
-          ...form,
-          price:
-            Number(
-              form.price
-            ),
-          stock:
-            Number(
-              form.stock
-            ),
-        });
+        await api.post(
+          "/products",
+          form
+        );
 
-        setForm({
-          name: "",
-          description:
-            "",
-          price: "",
-          stock: "",
-          brandId: "",
-        });
-
-        if (onCreated) {
-          onCreated();
-        }
-      } catch (error) {
+        alert(
+          "Product Created"
+        );
+      } catch (
+        error
+      ) {
         console.error(
           error
         );
@@ -66,14 +53,6 @@ function ProductForm({
       onSubmit={
         handleSubmit
       }
-      style={{
-        display: "flex",
-        flexDirection:
-          "column",
-        gap: "10px",
-        marginBottom:
-          "30px",
-      }}
     >
       <input
         name="name"
@@ -84,7 +63,10 @@ function ProductForm({
         }
       />
 
-      <input
+      <br />
+      <br />
+
+      <textarea
         name="description"
         placeholder="Description"
         value={
@@ -95,6 +77,9 @@ function ProductForm({
         }
       />
 
+      <br />
+      <br />
+
       <input
         name="price"
         placeholder="Price"
@@ -103,6 +88,9 @@ function ProductForm({
           handleChange
         }
       />
+
+      <br />
+      <br />
 
       <input
         name="stock"
@@ -113,16 +101,33 @@ function ProductForm({
         }
       />
 
-      <input
-        name="brandId"
-        placeholder="Brand Id"
-        value={
-          form.brandId
-        }
-        onChange={
-          handleChange
+      <br />
+      <br />
+
+      <ImageUploader
+        onSuccess={(
+          imageUrl
+        ) =>
+          setForm({
+            ...form,
+            imageUrl,
+          })
         }
       />
+
+      {form.imageUrl && (
+        <img
+          src={
+            "http://localhost:5000" +
+            form.imageUrl
+          }
+          alt="preview"
+          width="150"
+        />
+      )}
+
+      <br />
+      <br />
 
       <button
         type="submit"

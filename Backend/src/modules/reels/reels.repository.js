@@ -1,6 +1,18 @@
 const prisma =
   require("../../config/database");
 
+const getReels =
+  async () => {
+    return prisma.reel.findMany({
+      include: {
+        product: true,
+        user: true,
+        likes: true,
+        comments: true,
+      },
+    });
+  };
+
 const createReel =
   async (data) => {
     return prisma.reel.create({
@@ -8,21 +20,7 @@ const createReel =
     });
   };
 
-const getReels =
-  async () => {
-    return prisma.reel.findMany({
-      include: {
-        user: true,
-        likes: true,
-        comments: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-  };
-
 module.exports = {
-  createReel,
   getReels,
+  createReel,
 };
